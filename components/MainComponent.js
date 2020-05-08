@@ -1,27 +1,35 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 import Newsfeed from './NewsfeedComponent';
 import ArticleInfo from './ArticleInfoComponent';
 import { ARTICLES } from '../shared/articles';
 
-class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            articles: ARTICLES,
-            selectedArticle: null
-        };
+const NewsfeedNavigator = createStackNavigator(
+    {
+        Newsfeed: { screen: Newsfeed },
+        ArticleInfo: { screen: ArticleInfo }
+    },
+    {
+        initialRouteName: 'Newsfeed',
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: '#03719C'
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+                color: 'white'
+            }
+        }
     }
+)
 
-    onArticleSelect(articleId) {
-        this.setState({selectedArticle: articleId});
-    }
+class Main extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <Newsfeed articles={this.state.articles} onPress={articleId => this.onArticleSelect(articleId)} />
-                <ArticleInfo article={this.state.articles.filter(article => article.id === this.state.selectedArticle)[0]} />
+            <View style={{flex: 1, paddingTop: Platform.OS === 'ios' ? 0: Expo.Constants.statusBarHeight }}>
+                <NewsfeedNavigator />
             </View>
         );
     }

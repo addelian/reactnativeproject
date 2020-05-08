@@ -1,7 +1,7 @@
 export const ARTICLES = [
     {
         id:0,
-        title: "New Site Launched!",
+        title: "New Mobile Site Launched!",
         author: "Jake Genera",
         date: "2019-09-20T16:49Z",
         subhead: "Special thanks to my web developer, Nic Addelia.",
