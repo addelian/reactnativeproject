@@ -9,6 +9,7 @@ function Newsfeed(props) {
             <ListItem
                 title={item.title}
                 subtitle={item.subhead}
+                onPress={() => props.onPress(item.id)}
                 leftAvatar={{ source: require('./images/hazy.jpg')}}
             />
         );
