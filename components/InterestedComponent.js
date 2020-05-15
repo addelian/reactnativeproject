@@ -3,6 +3,7 @@ import { FlatList, View, Text, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
+import * as Animatable from 'react-native-animatable';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { deleteInterested } from '../redux/ActionCreators';
@@ -68,19 +69,23 @@ class Interested extends Component {
         }
         if (this.props.articles.errMess) {
             return (
-                <View>
-                    <Text>{this.props.articles.errMess}</Text>
-                </View>
+                <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
+                    <View>
+                        <Text>{this.props.articles.errMess}</Text>
+                    </View>
+                </Animatable.View>
             );
         }
         return (
-            <FlatList
-                data={this.props.articles.articles.filter(
-                    article => this.props.interested.includes(article.id)
-                )}
-                renderItem={renderInterestedItem}
-                keyExtractor={item => item.id.toString()}
-            />
+            <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
+                <FlatList
+                    data={this.props.articles.articles.filter(
+                        article => this.props.interested.includes(article.id)
+                    )}
+                    renderItem={renderInterestedItem}
+                    keyExtractor={item => item.id.toString()}
+                />
+            </Animatable.View>
         );
     }
 }

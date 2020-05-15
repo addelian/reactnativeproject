@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
+import * as Animatable from 'react-native-animatable';
 import { postInterested } from '../redux/ActionCreators';
 import { ARTICLES } from '../shared/articles';
 import { baseUrl } from '../shared/baseUrl';
@@ -66,13 +67,15 @@ class ArticleInfo extends Component {
         const articleId = this.props.navigation.getParam('articleId');
         const article = this.props.articles.articles.filter(article => article.id === articleId)[0];
         return (
-            <ScrollView>
-                <RenderArticle 
-                    article={article} 
-                    interested={this.props.interested.includes(articleId)}
-                    markInterested={() => this.markInterested(articleId)}
-                />
-            </ScrollView>
+            <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
+                <ScrollView>
+                    <RenderArticle 
+                        article={article} 
+                        interested={this.props.interested.includes(articleId)}
+                        markInterested={() => this.markInterested(articleId)}
+                    />
+                </ScrollView>
+            </Animatable.View>
         );
     }
 }

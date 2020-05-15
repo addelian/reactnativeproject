@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
+import * as Animatable from 'react-native-animatable';
 import { ARTICLES } from '../shared/articles';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
@@ -29,13 +30,15 @@ class Newsfeed extends Component {
         const { navigate } = this.props.navigation;
         const renderArticleItem = ({item}) => {
             return (
-                <Tile
-                    title={item.title}
-                    caption={item.subhead}
-                    featured
-                    onPress={() => navigate('ArticleInfo', { articleId: item.id })}
-                    imageSrc={{uri: baseUrl + item.image}}
-                />
+                <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
+                    <Tile
+                        title={item.title}
+                        caption={item.subhead}
+                        featured
+                        onPress={() => navigate('ArticleInfo', { articleId: item.id })}
+                        imageSrc={{uri: baseUrl + item.image}}
+                    />
+                </Animatable.View>
             );
         };
 

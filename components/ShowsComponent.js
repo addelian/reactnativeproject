@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
 import { Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
+import * as Animatable from 'react-native-animatable';
 import { SHOWS } from '../shared/shows';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
@@ -36,19 +37,23 @@ class Shows extends Component {
             }
             if (props.errMess) {
                 return (
-                    <View>
-                        <Text>{props.errMess}</Text>
-                    </View>
+                    <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
+                        <View>
+                            <Text>{props.errMess}</Text>
+                        </View>
+                    </Animatable.View>
                 );
             }
             if (item) {
                 return (
-                    <Tile
-                        title={item.title}
-                        caption={`${item.subhead}  --  ${item.address}`}
-                        featured
-                        imageSrc={{uri: baseUrl + item.image}}
-                    />
+                    <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
+                        <Tile
+                            title={item.title}
+                            caption={`${item.subhead}  --  ${item.address}`}
+                            featured
+                            imageSrc={{uri: baseUrl + item.image}}
+                        />
+                    </Animatable.View>
                 );
             }
         };
