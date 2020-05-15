@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Tile } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { ARTICLES } from '../shared/articles';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+    return {
+        articles: state.articles
+    };
+};
 
 class Newsfeed extends Component {
 
@@ -20,18 +28,19 @@ class Newsfeed extends Component {
         const { navigate } = this.props.navigation;
         const renderArticleItem = ({item}) => {
             return (
-                <ListItem
+                <Tile
                     title={item.title}
-                    subtitle={item.subhead}
+                    caption={item.subhead}
+                    featured
                     onPress={() => navigate('ArticleInfo', { articleId: item.id })}
-                    leftAvatar={{ source: require('./images/hazy.jpg')}}
+                    imageSrc={{uri: baseUrl + item.image}}
                 />
             );
         };
 
         return (
             <FlatList
-                data={this.state.articles}
+                data={this.props.articles.articles}
                 renderItem={renderArticleItem}
                 keyExtractor={item => item.id.toString()}
             />
@@ -39,4 +48,4 @@ class Newsfeed extends Component {
     }
 }
 
-export default Newsfeed;
+export default connect(mapStateToProps)(Newsfeed);

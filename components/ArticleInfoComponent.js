@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { ARTICLES } from '../shared/articles';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+    return {
+        articles: state.articles
+    };
+};
 
 function RenderArticle(props) {
 
@@ -11,7 +19,7 @@ function RenderArticle(props) {
         return (
             <Card
                 featuredTitle={article.title}
-                image={require('./images/hazy.jpg')}>
+                image={{uri: baseUrl + article.image}}>
                 <Text style={{margin: 10}}>
                     {article.text}
                 </Text>
@@ -50,16 +58,18 @@ class ArticleInfo extends Component {
 
     render() {
         const articleId = this.props.navigation.getParam('articleId');
-        const article = this.state.articles.filter(article => article.id === articleId)[0];
+        const article = this.props.articles.articles.filter(article => article.id === articleId)[0];
         return (
-            <RenderArticle 
-                article={article} 
-                interested={this.state.interested}
-                markInterested={() => this.markInterested()}
-            />
+            <ScrollView>
+                <RenderArticle 
+                    article={article} 
+                    interested={this.state.interested}
+                    markInterested={() => this.markInterested()}
+                />
+            </ScrollView>
         );
     }
 }
 
 
-export default ArticleInfo;
+export default connect(mapStateToProps)(ArticleInfo);
