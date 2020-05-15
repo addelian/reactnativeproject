@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Tile } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { SHOWS } from '../shared/shows';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+    return {
+        shows: state.shows
+    };
+};
 
 class Shows extends Component {
 
@@ -23,22 +31,18 @@ class Shows extends Component {
             const {item} = props;
 
             return (
-                <ListItem
+                <Tile
                     title={item.title}
-                    subtitle={
-                        <View>
-                            <Text>{item.subhead}</Text>
-                            <Text>{item.address}</Text>
-                        </View>
-                    }
-                    leftAvatar={{ source: require('./images/hazy.jpg')}}
+                    caption={`${item.subhead}  --  ${item.address}`}
+                    featured
+                    imageSrc={{uri: baseUrl + item.image}}
                 />
             );
         };
 
         return (
             <FlatList
-                data={this.state.shows}
+                data={this.props.shows.shows}
                 renderItem={renderShowItem}
                 keyExtractor={item => item.id.toString()}
             />
@@ -46,4 +50,4 @@ class Shows extends Component {
     }
 }
 
-export default Shows;
+export default connect(mapStateToProps)(Shows);

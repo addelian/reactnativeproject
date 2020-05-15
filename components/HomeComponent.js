@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { ARTICLES } from '../shared/articles';
 import { SHOWS } from '../shared/shows';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+    return {
+        articles: state.articles,
+        shows: state.shows
+    };
+};
 
 function RenderItem({item}) {
     if (item) {
         return (
             <Card
                 featuredTitle={item.title}
-                image={require('./images/hazy.jpg')}>
-                <Text style={{margin: 10}}>
+                image={{uri: baseUrl + item.image}}>
+                <Text style={{margin: 10, textAlign: 'center'}}>
                     {item.subhead}
                 </Text>
             </Card>
@@ -55,7 +64,7 @@ class Home extends Component {
                     textDecorationLine: 'underline' 
                     }}>Featured Article</Text>
                 <RenderItem
-                item={this.state.articles.filter(article => article.featured)[0]} />
+                item={this.props.articles.articles.filter(article => article.featured)[0]} />
                 <Text style={{ 
                     paddingTop: 25, 
                     paddingBottom: 5, 
@@ -65,10 +74,10 @@ class Home extends Component {
                     textDecorationLine: 'underline' 
                     }}>Next Show</Text>
                 <RenderItem
-                item={this.state.shows.filter(show => show.featured)[0]} />
+                item={this.props.shows.shows.filter(show => show.featured)[0]} />
             </ScrollView>
         );
     }
 }
 
-export default Home;
+export default connect(mapStateToProps)(Home);
