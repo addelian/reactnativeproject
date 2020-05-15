@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { postInterested } from '../redux/ActionCreators';
 import { ARTICLES } from '../shared/articles';
 import { baseUrl } from '../shared/baseUrl';
 
 const mapStateToProps = state => {
     return {
-        articles: state.articles
+        articles: state.articles,
+        interested: state.interested
     };
+};
+
+const mapDispatchToProps = {
+    postInterested: articleId => (postInterested(articleId))
 };
 
 function RenderArticle(props) {
@@ -48,8 +54,8 @@ class ArticleInfo extends Component {
         };
     }
 
-    markInterested() {
-        this.setState({interested: true});
+    markInterested(articleId) {
+        this.props.postInterested(articleId);
     }
 
     static navigationOptions = {
@@ -63,8 +69,8 @@ class ArticleInfo extends Component {
             <ScrollView>
                 <RenderArticle 
                     article={article} 
-                    interested={this.state.interested}
-                    markInterested={() => this.markInterested()}
+                    interested={this.props.interested.includes(articleId)}
+                    markInterested={() => this.markInterested(articleId)}
                 />
             </ScrollView>
         );
@@ -72,4 +78,4 @@ class ArticleInfo extends Component {
 }
 
 
-export default connect(mapStateToProps)(ArticleInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleInfo);

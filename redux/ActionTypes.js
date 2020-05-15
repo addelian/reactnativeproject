@@ -5,3 +5,5 @@ export const ARTICLES_FAILED = 'ARTICLES_FAILED';
 export const SHOWS_LOADING = 'SHOWS_LOADING';
 export const ADD_SHOWS = 'ADD_SHOWS';
 export const SHOWS_FAILED = 'SHOWS_FAILED';
+
+export const ADD_INTERESTED = 'ADD_INTERESTED';

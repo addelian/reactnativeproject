@@ -74,3 +74,14 @@ export const addShows = shows => ({
     type: ActionTypes.ADD_SHOWS,
     payload: shows
 });
+
+export const postInterested = articleId => dispatch => {
+    setTimeout(() => {
+        dispatch(addInterested(articleId));
+    }, 2000);
+};
+
+export const addInterested = articleId => ({
+    type: ActionTypes.ADD_INTERESTED,
+    payload: articleId
+});
