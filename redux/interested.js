@@ -7,7 +7,9 @@ export const interested = (state = [], action) => {
                 return state;
             }
             return state.concat(action.payload);
-
+        case ActionTypes.DELETE_INTERESTED:
+            return state.filter(article => article !== action.payload);
+            
         default:
             return state;
     }

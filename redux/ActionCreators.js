@@ -85,3 +85,8 @@ export const addInterested = articleId => ({
     type: ActionTypes.ADD_INTERESTED,
     payload: articleId
 });
+
+export const deleteInterested = articleId => ({
+    type: ActionTypes.DELETE_INTERESTED,
+    payload: articleId
+});
