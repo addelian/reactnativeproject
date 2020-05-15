@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
@@ -31,7 +31,24 @@ class Interested extends Component {
                 {
                     text: 'Delete',
                     type: 'delete',
-                    onPress: () => this.props.deleteInterested(item.id)
+                    onPress: () => {
+                        Alert.alert(
+                            'Delete Saved Article?',
+                            'Are you sure you wish to remove "' + item.title + '" from your list?',
+                            [
+                                {
+                                    text: 'Cancel',
+                                    onPress: () => console.log(item.title + 'Not Deleted'),
+                                    style: 'cancel'
+                                },
+                                {
+                                    text: 'OK',
+                                    onPress: () => this.props.deleteInterested(item.id)
+                                }
+                            ],
+                            { cancelable: false }
+                        );
+                    }
                 }
             ];
             return (
