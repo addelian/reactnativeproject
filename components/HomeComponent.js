@@ -19,7 +19,7 @@ function RenderItem({item}) {
             <Card
                 featuredTitle={item.title}
                 image={{uri: baseUrl + item.image}}>
-                <Text style={{margin: 10}}>
+                <Text style={{margin: 10, textAlign: 'center'}}>
                     {item.subhead}
                 </Text>
             </Card>

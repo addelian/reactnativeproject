@@ -33,12 +33,7 @@ class Shows extends Component {
             return (
                 <Tile
                     title={item.title}
-                    caption={
-                        <View>
-                            <Text>{item.subhead}</Text>
-                            <Text>{item.address}</Text>
-                        </View>
-                    }
+                    caption={`${item.subhead}  --  ${item.address}`}
                     featured
                     imageSrc={{uri: baseUrl + item.image}}
                 />
