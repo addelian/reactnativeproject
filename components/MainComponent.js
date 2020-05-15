@@ -5,6 +5,7 @@ import Contact from './ContactComponent';
 import ArticleInfo from './ArticleInfoComponent';
 import Shows from './ShowsComponent';
 import Interested from './InterestedComponent';
+import ShopInfo from './ShopInfoComponent';
 import Shop from './ShopComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator, createDrawerNavigator,
@@ -143,24 +144,30 @@ const InterestedNavigator = createStackNavigator(
 
 const ShopNavigator = createStackNavigator(
     {
-        Shop: { screen: Shop }
+        Shop: {
+            screen: Shop,
+            navigationOptions: ({navigation}) => ({
+                headerLeft: <Icon
+                    name='shopping-cart'
+                    type='font-awesome'
+                    iconStyle={styles.stackIcon}
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            })
+        },
+        ShopInfo: { screen: ShopInfo }
     },
     {
-        navigationOptions: ({navigation}) => ({
+        initialRouteName: 'Shop',
+        navigationOptions: {
             headerStyle: {
                 backgroundColor: '#03719C'
             },
             headerTintColor: 'white',
             headerTitleStyle: {
                 color: 'white'
-            },
-            headerLeft: <Icon
-                name='shopping-cart'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
+            }
+        }
     }
 );
 

@@ -127,3 +127,19 @@ export const deleteInterested = articleId => ({
     type: ActionTypes.DELETE_INTERESTED,
     payload: articleId
 });
+
+export const postCart = shopId => dispatch => {
+    setTimeout(() => {
+        dispatch(addCart(shopId));
+    }, 2000);
+};
+
+export const addCart = shopId => ({
+    type: ActionTypes.ADD_CART,
+    payload: shopId
+});
+
+export const deleteCart = shopId => ({
+    type: ActionTypes.DELETE_CART,
+    payload: shopId
+});

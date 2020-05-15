@@ -1,43 +1,41 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Text, View, ScrollView, Button } from 'react-native';
+import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
-import { postInterested } from '../redux/ActionCreators';
-import { SHOP } from '../shared/articles';
+import { postCart } from '../redux/ActionCreators';
+import { SHOP } from '../shared/shop';
 import { baseUrl } from '../shared/baseUrl';
 
 const mapStateToProps = state => {
     return {
         shop: state.shop,
-        interested: state.interested
+        cart: state.cart
     };
 };
 
 const mapDispatchToProps = {
-    postInterested: articleId => (postInterested(articleId))
+    postCart: shopId => (postCart(shopId))
 };
 
-function RenderArticle(props) {
+function RenderMerch(props) {
 
-    const {article} = props;
+    const {shop} = props;
 
-    if (article) {
+    if (shop) {
         return (
             <Card
-                featuredTitle={article.title}
-                image={{uri: baseUrl + article.image}}>
+                featuredTitle={shop.name}
+                image={{uri: baseUrl + shop.image}}>
                 <Text style={{margin: 10}}>
-                    {article.text}
+                    {shop.size}
                 </Text>
-                <Icon
-                    name={props.interested ? 'star' : 'star-o'}
+                <Button
+                    title="Add to Cart"
                     type='font-awesome'
-                    color='#fcd303'
-                    raised
-                    reverse
-                    onPress={() => props.interested ?
-                        console.log('Already set as interested') : props.markInterested()}
+                    color='#03719C'
+                    onPress={() => props.cart ?
+                        console.log('Already in Cart') : props.markCart()}
                 />
             </Card>
         );
@@ -45,34 +43,33 @@ function RenderArticle(props) {
     return <View />;
 }
 
-class ArticleInfo extends Component {
+class ShopInfo extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            articles: ARTICLES,
-            interested: false
+            shop: SHOP,
+            cart: false
         };
     }
 
-    markInterested(articleId) {
-        this.props.postInterested(articleId);
+    markCart(shopId) {
+        this.props.postCart(shopId);
     }
 
     static navigationOptions = {
-        title: 'Article Information'
+        title: 'More Information'
     };
 
     render() {
-        const articleId = this.props.navigation.getParam('articleId');
-        const article = this.props.articles.articles.filter(article => article.id === articleId)[0];
+        const shopId = this.props.navigation.getParam('shopId');
+        const shop = this.props.shop.shop.filter(shop => shop.id === shopId)[0];
         return (
             <Animatable.View animation='fadeIn' duration={1500} delay={1000}>
                 <ScrollView>
-                    <RenderArticle 
-                        article={article} 
-                        interested={this.props.interested.includes(articleId)}
-                        markInterested={() => this.markInterested(articleId)}
+                    <RenderMerch
+                        shop={shop} 
+                        markCart={() => this.markCart(shopId)}
                     />
                 </ScrollView>
             </Animatable.View>
@@ -81,4 +78,4 @@ class ArticleInfo extends Component {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopInfo);

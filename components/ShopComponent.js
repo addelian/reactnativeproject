@@ -40,7 +40,7 @@ class Shop extends Component {
                         <Button
                             color="#03719C"
                             title="View" 
-                            onPress={() => navigate('ShopInfo', { shopId: shop.id })}
+                            onPress={() => navigate('ShopInfo', { shopId: item.id })}
                         />
                     </Card>
                 </Animatable.View>

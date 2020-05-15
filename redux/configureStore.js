@@ -7,6 +7,7 @@ import { articles } from './articles';
 import { shows } from './shows';
 import { interested } from './interested';
 import { shop } from './shop';
+import { cart } from './cart';
 
 const config = {
     key: 'root',
@@ -20,7 +21,8 @@ export const ConfigureStore = () => {
             articles,
             shows,
             interested,
-            shop
+            shop,
+            cart
         }),
         applyMiddleware(thunk, logger)
     );
