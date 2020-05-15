@@ -3,6 +3,7 @@
         "animatable",
         "navigator",
         "newsfeed",
+        "persistor",
         "swipeout",
         "unmountable"
     ],
