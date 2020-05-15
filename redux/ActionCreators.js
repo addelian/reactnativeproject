@@ -75,6 +75,43 @@ export const addShows = shows => ({
     payload: shows
 });
 
+export const fetchShop = () => dispatch => {
+
+    dispatch(shopLoading());
+
+    return fetch(baseUrl + 'shop')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(shop => dispatch(addShop(shop)))
+        .catch(error => dispatch(shopFailed(error.message)));
+};
+
+export const shopLoading = () => ({
+    type: ActionTypes.SHOP_LOADING
+});
+
+export const shopFailed = errMess => ({
+    type: ActionTypes.SHOP_FAILED,
+    payload: errMess
+});
+
+export const addShop = shop => ({
+    type: ActionTypes.ADD_SHOP,
+    payload: shop
+});
+
 export const postInterested = articleId => dispatch => {
     setTimeout(() => {
         dispatch(addInterested(articleId));

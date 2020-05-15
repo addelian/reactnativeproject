@@ -8,3 +8,10 @@ export const SHOWS_FAILED = 'SHOWS_FAILED';
 
 export const ADD_INTERESTED = 'ADD_INTERESTED';
 export const DELETE_INTERESTED = 'DELETE_INTERESTED';
+
+export const SHOP_LOADING = 'SHOP_LOADING';
+export const ADD_SHOP = 'ADD_SHOP';
+export const SHOP_FAILED = 'SHOP_FAILED';
+
+export const ADD_CART = 'ADD_CART';
+export const DELETE_CART = 'DELETE_CART';

@@ -5,17 +5,19 @@ import Contact from './ContactComponent';
 import ArticleInfo from './ArticleInfoComponent';
 import Shows from './ShowsComponent';
 import Interested from './InterestedComponent';
+import Shop from './ShopComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator, createDrawerNavigator,
     DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
 import { connect } from 'react-redux';
-import { fetchArticles, fetchShows } from '../redux/ActionCreators';
+import { fetchArticles, fetchShows, fetchShop } from '../redux/ActionCreators';
 
 const mapDispatchToProps = {
     fetchArticles,
-    fetchShows
+    fetchShows,
+    fetchShop
 };
 
 const NewsfeedNavigator = createStackNavigator(
@@ -139,6 +141,29 @@ const InterestedNavigator = createStackNavigator(
     }
 );
 
+const ShopNavigator = createStackNavigator(
+    {
+        Shop: { screen: Shop }
+    },
+    {
+        navigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#03719C'
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerLeft: <Icon
+                name='shopping-cart'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
+
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView
@@ -211,6 +236,19 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
+        Shop: {
+            screen: ShopNavigator, 
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='shopping-cart'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         Contact: {
             screen: ContactNavigator,
             navigationOptions: {
@@ -241,6 +279,7 @@ class Main extends Component {
     componentDidMount() {
         this.props.fetchArticles();
         this.props.fetchShows();
+        this.props.fetchShop();
     }
 
     render() {

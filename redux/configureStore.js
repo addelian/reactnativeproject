@@ -6,6 +6,7 @@ import storage from 'redux-persist/es/storage';
 import { articles } from './articles';
 import { shows } from './shows';
 import { interested } from './interested';
+import { shop } from './shop';
 
 const config = {
     key: 'root',
@@ -18,7 +19,8 @@ export const ConfigureStore = () => {
         persistCombineReducers(config, {
             articles,
             shows,
-            interested
+            interested,
+            shop
         }),
         applyMiddleware(thunk, logger)
     );
