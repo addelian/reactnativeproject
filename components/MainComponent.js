@@ -4,6 +4,7 @@ import Newsfeed from './NewsfeedComponent';
 import Contact from './ContactComponent';
 import ArticleInfo from './ArticleInfoComponent';
 import Shows from './ShowsComponent';
+import Interested from './InterestedComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator, createDrawerNavigator,
     DrawerItems } from 'react-navigation';
@@ -115,6 +116,29 @@ const ContactNavigator = createStackNavigator(
     }
 );
 
+const InterestedNavigator = createStackNavigator(
+    {
+        Saved: { screen: Interested }
+    },
+    {
+        navigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#03719C'
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerLeft: <Icon
+                name='star'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
+
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView
@@ -167,6 +191,19 @@ const MainNavigator = createDrawerNavigator(
                 drawerIcon: ({tintColor}) => (
                     <Icon
                         name='music'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Saved: {
+            screen: InterestedNavigator, 
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='star'
                         type='font-awesome'
                         size={24}
                         color={tintColor}
