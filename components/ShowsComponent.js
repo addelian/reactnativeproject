@@ -4,6 +4,7 @@ import { Tile } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { SHOWS } from '../shared/shows';
 import { baseUrl } from '../shared/baseUrl';
+import Loading from './LoadingComponent';
 
 const mapStateToProps = state => {
     return {
@@ -30,14 +31,26 @@ class Shows extends Component {
 
             const {item} = props;
 
-            return (
-                <Tile
-                    title={item.title}
-                    caption={`${item.subhead}  --  ${item.address}`}
-                    featured
-                    imageSrc={{uri: baseUrl + item.image}}
-                />
-            );
+            if (props.isLoading) {
+                return <Loading />;
+            }
+            if (props.errMess) {
+                return (
+                    <View>
+                        <Text>{props.errMess}</Text>
+                    </View>
+                );
+            }
+            if (item) {
+                return (
+                    <Tile
+                        title={item.title}
+                        caption={`${item.subhead}  --  ${item.address}`}
+                        featured
+                        imageSrc={{uri: baseUrl + item.image}}
+                    />
+                );
+            }
         };
 
         return (

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ARTICLES } from '../shared/articles';
 import { SHOWS } from '../shared/shows';
 import { baseUrl } from '../shared/baseUrl';
+import Loading from './LoadingComponent';
 
 const mapStateToProps = state => {
     return {
@@ -13,7 +14,19 @@ const mapStateToProps = state => {
     };
 };
 
-function RenderItem({item}) {
+function RenderItem(props) {
+    const {item} = props;
+
+    if (props.isLoading) {
+        return <Loading />;
+    }
+    if (props.errMess) {
+        return (
+            <View>
+                <Text>{props.errMess}</Text>
+            </View>
+        );
+    }
     if (item) {
         return (
             <Card
@@ -64,7 +77,10 @@ class Home extends Component {
                     textDecorationLine: 'underline' 
                     }}>Featured Article</Text>
                 <RenderItem
-                item={this.props.articles.articles.filter(article => article.featured)[0]} />
+                    item={this.props.articles.articles.filter(article => article.featured)[0]}
+                    isLoading={this.props.articles.isLoading}
+                    errMess={this.props.articles.errMess}
+                />
                 <Text style={{ 
                     paddingTop: 25, 
                     paddingBottom: 5, 
@@ -74,7 +90,10 @@ class Home extends Component {
                     textDecorationLine: 'underline' 
                     }}>Next Show</Text>
                 <RenderItem
-                item={this.props.shows.shows.filter(show => show.featured)[0]} />
+                    item={this.props.shows.shows.filter(show => show.featured)[0]}
+                    isLoading={this.props.shows.isLoading}
+                    errMess={this.props.shows.errMess}
+                />
             </ScrollView>
         );
     }
