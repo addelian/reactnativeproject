@@ -7,6 +7,7 @@ import Shows from './ShowsComponent';
 import Interested from './InterestedComponent';
 import ShopInfo from './ShopInfoComponent';
 import Shop from './ShopComponent';
+import Cart from './CartComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator, createDrawerNavigator,
     DrawerItems } from 'react-navigation';
@@ -148,7 +149,7 @@ const ShopNavigator = createStackNavigator(
             screen: Shop,
             navigationOptions: ({navigation}) => ({
                 headerLeft: <Icon
-                    name='shopping-cart'
+                    name='money'
                     type='font-awesome'
                     iconStyle={styles.stackIcon}
                     onPress={() => navigation.toggleDrawer()}
@@ -168,6 +169,29 @@ const ShopNavigator = createStackNavigator(
                 color: 'white'
             }
         }
+    }
+);
+
+const CartNavigator = createStackNavigator(
+    {
+        Cart: { screen: Cart }
+    },
+    {
+        navigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#03719C'
+            },
+            headerTintColor: 'white',
+            headerTitleStyle: {
+                color: 'white'
+            },
+            headerLeft: <Icon
+                name='shopping-cart'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
     }
 );
 
@@ -245,6 +269,19 @@ const MainNavigator = createDrawerNavigator(
         },
         Shop: {
             screen: ShopNavigator, 
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='money'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Cart: {
+            screen: CartNavigator, 
             navigationOptions: {
                 drawerIcon: ({tintColor}) => (
                     <Icon

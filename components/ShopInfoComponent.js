@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button } from 'react-native';
+import { Text, View, ScrollView, Button, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
@@ -24,20 +24,21 @@ function RenderMerch(props) {
 
     if (shop) {
         return (
-            <Card
-                featuredTitle={shop.name}
-                image={{uri: baseUrl + shop.image}}>
-                <Text style={{margin: 10}}>
-                    {shop.size}
-                </Text>
-                <Button
-                    title="Add to Cart"
-                    type='font-awesome'
-                    color='#03719C'
-                    onPress={() => props.cart ?
-                        console.log('Already in Cart') : props.markCart()}
-                />
-            </Card>
+                <Card
+                    featuredTitle={shop.name}
+                    featuredTitleStyle={{marginTop:100}}
+                    image={{uri: baseUrl + shop.image}}
+                >
+                    <Text style={{margin: 10}}>
+                        Available in sizes {shop.size}. Get yours today for {shop.price}.
+                    </Text>
+                    <Button
+                        title="Add to Cart"
+                        color='#03719C'
+                        onPress={() => props.cart ?
+                            console.log('Already in Cart') : props.markCart()}
+                    />
+                </Card>
         );
     }
     return <View />;
@@ -62,6 +63,7 @@ class ShopInfo extends Component {
     };
 
     render() {
+        const { navigate } = this.props.navigation;
         const shopId = this.props.navigation.getParam('shopId');
         const shop = this.props.shop.shop.filter(shop => shop.id === shopId)[0];
         return (
@@ -71,11 +73,27 @@ class ShopInfo extends Component {
                         shop={shop} 
                         markCart={() => this.markCart(shopId)}
                     />
+                    <View style={styles.br} />
+                    <Button
+                        title="Go to Cart"
+                        color="#0F9B8E"
+                        onPress={() => navigate('Cart')}
+                        style={styles.button}
+                    />
                 </ScrollView>
             </Animatable.View>
         );
     }
 }
 
+const styles = StyleSheet.create({
+    button: {
+        textAlign: 'center',
+        marginHorizontal: 100
+    },
+    br: {
+        marginVertical: 10
+    }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopInfo);
